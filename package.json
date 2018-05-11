@@ -2,9 +2,10 @@
     "name": "ngx-doc",
     "version": "1.0.0",
     "description": "WIP",
-    "main": "index.js",
+    "main": "lib/index",
+    "typings": "lib/index",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "build": "tsc -p ."
     },
     "repository": {
         "type": "git",
@@ -18,6 +19,7 @@
     },
     "homepage": "https://github.com/VismaLietuva/ngx-doc",
     "devDependencies": {
+        "@types/node": "10.0.8",
         "typescript": "2.8.3"
     }
 }

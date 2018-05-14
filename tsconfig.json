@@ -4,8 +4,7 @@
         "module": "commonjs",
         "declaration": true,
         "outDir": "./.out",
-        "strict": true,
-        "moduleResolution": "node",
-        "strictPropertyInitialization": false
+        "strict": false,
+        "moduleResolution": "node"
     }
 }

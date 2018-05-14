@@ -20,6 +20,10 @@
     "homepage": "https://github.com/VismaLietuva/ngx-doc",
     "devDependencies": {
         "@types/node": "10.0.8",
+        "ts-node": "6.0.3",
         "typescript": "2.8.3"
+    },
+    "dependencies": {
+        "yargs": "11.0.0"
     }
 }

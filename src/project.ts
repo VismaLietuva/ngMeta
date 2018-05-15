@@ -3,7 +3,8 @@ import * as fs from 'fs';
 import * as ts from 'typescript';
 
 import { RuntimeOptions } from './cli';
-import { parsers } from './parsers/parser-factory';
+import { BaseParser } from './parsers/base-parser';
+import { ClassParser } from './parsers/class-parser';
 
 const TS_CONFIG = 'tsconfig.json';
 const COMPILER_OPTIONS: ts.CompilerOptions = {
@@ -39,24 +40,19 @@ export class Project {
 
     parseFile(file: ts.SourceFile) {
         console.log(file.fileName);
+        let parser: BaseParser;
+        let result: any;
         ts.forEachChild(file, (node) => {
-            //console.log(ts.SyntaxKind[node.kind]);
-
-            const parser = parsers.get(node.kind);
-
-            if (!parser) {
-                // console.error(
-                //     `Error: could not get parser for ${
-                //         ts.SyntaxKind[node.kind]
-                //     }`
-                // );
-                return;
+            switch (node.kind) {
+                case ts.SyntaxKind.ClassDeclaration:
+                    parser = new ClassParser();
+                    result = parser.parse(node);
+                    break;
+                default:
+                    break;
             }
-
-            console.log('parser', parser);
-
-            const result = parser.parse(node);
-            console.log(result);
         });
+
+        console.log(result);
     }
 }

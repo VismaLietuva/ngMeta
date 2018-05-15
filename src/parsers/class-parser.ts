@@ -1,16 +1,21 @@
 import { BaseParser } from './base-parser';
 import { IMetadata } from '../model/metadata';
-import { Node } from 'typescript';
+import { Node, ClassDeclaration, Identifier, SyntaxKind } from 'typescript';
 
 export class ClassParser extends BaseParser {
-    parse(node: Node): IMetadata {
-        debugger;
-        Object.getOwnPropertyNames(node).forEach((k) => {
-            console.log(k);
+    parse(node: Node): any {
+        //debugger;
+
+        const c = node as ClassDeclaration;
+
+        let metadata = {
+            name: c.name.escapedText
+        };
+
+        c.members.forEach((m) => {
+            console.log(SyntaxKind[m.kind]);
         });
 
-        //console.log(node);
-
-        return null;
+        return metadata;
     }
 }

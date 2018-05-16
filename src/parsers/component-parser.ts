@@ -1,11 +1,20 @@
 import { ClassParser } from './class-parser';
-import { Node } from 'typescript';
+import { ClassDeclaration } from 'typescript';
+import { ComponentMetadata, HeritageMetadata } from '../model/project-metadata';
+import { HeritageParser } from './heritage-parser';
 
-export class ComponentParser extends ClassParser {
-    parse(node: Node): any {
-        console.log('Parsing component');
-        const data = super.parse(node);
+export class ComponentParser {
+    parse(declaration: ClassDeclaration): ComponentMetadata {
+        const meta = new ComponentMetadata();
+        meta.name = declaration.name.text;
 
-        return data;
+        meta.heritage = this.parseHeritage(declaration);
+
+        return meta;
+    }
+
+    private parseHeritage(declaration: ClassDeclaration): HeritageMetadata {
+        const parser = new HeritageParser();
+        return parser.parse(declaration);
     }
 }

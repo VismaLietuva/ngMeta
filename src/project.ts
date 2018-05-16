@@ -5,6 +5,7 @@ import * as ts from 'typescript';
 import { RuntimeOptions } from './cli';
 import { ClassParser } from './parsers/class-parser';
 import { SourceFileParser } from './parsers/source-file-parser';
+import { ProjectMetadata, FileMetadata } from './model/project-metadata';
 
 const TS_CONFIG = 'tsconfig.json';
 const COMPILER_OPTIONS: ts.CompilerOptions = {
@@ -29,18 +30,14 @@ export class Project {
                 (f) => !ts.isExternalModuleReference(f) && !f.isDeclarationFile
             );
 
-        // fileNames.forEach((f) => {
-        //     console.log(path.resolve(f.fileName));
-        // });
+        const meta = new ProjectMetadata();
 
         this.files.forEach((f) => {
-            this.parseFile(f);
+            const parser = new SourceFileParser();
+            const fileMeta = parser.parse(f);
+            meta.files.push(fileMeta);
         });
-    }
 
-    parseFile(file: ts.SourceFile) {
-        console.log(file.fileName);
-
-        new SourceFileParser().parse(file);
+        console.log(meta);
     }
 }

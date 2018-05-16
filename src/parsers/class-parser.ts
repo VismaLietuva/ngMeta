@@ -1,17 +1,11 @@
 import { Node, ClassDeclaration, Identifier, SyntaxKind } from 'typescript';
+import { ClassMetadata } from '../model/project-metadata';
 
 export class ClassParser {
-    parse(node: Node): any {
-        const c = node as ClassDeclaration;
+    parse(declaration: ClassDeclaration): ClassMetadata {
+        const meta = new ClassMetadata();
+        meta.name = declaration.name.text;
 
-        let metadata = {
-            name: c.name.escapedText
-        };
-
-        c.members.forEach((m) => {
-            console.log(SyntaxKind[m.kind]);
-        });
-
-        return metadata;
+        return meta;
     }
 }

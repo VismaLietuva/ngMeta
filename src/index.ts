@@ -1,6 +1,5 @@
 import { getOptions } from './cli';
 import { Project } from './project';
-import { ClassParser } from './parsers/class-parser';
 
 const options = getOptions();
 

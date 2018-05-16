@@ -3,8 +3,8 @@ import * as fs from 'fs';
 import * as ts from 'typescript';
 
 import { RuntimeOptions } from './cli';
-import { BaseParser } from './parsers/base-parser';
 import { ClassParser } from './parsers/class-parser';
+import { SourceFileParser } from './parsers/source-file-parser';
 
 const TS_CONFIG = 'tsconfig.json';
 const COMPILER_OPTIONS: ts.CompilerOptions = {
@@ -19,7 +19,7 @@ export class Project {
     constructor(options: RuntimeOptions) {
         // TODO: check folder exists fs.stat()
         this.entryPoint = path.resolve(path.normalize(options.entryPoint));
-        console.log(`\nParsing Angular project form  ${this.entryPoint}\n`);
+        console.log(`\nParsing Angular project from  ${this.entryPoint}\n`);
 
         const program = ts.createProgram([this.entryPoint], COMPILER_OPTIONS);
 
@@ -40,19 +40,7 @@ export class Project {
 
     parseFile(file: ts.SourceFile) {
         console.log(file.fileName);
-        let parser: BaseParser;
-        let result: any;
-        ts.forEachChild(file, (node) => {
-            switch (node.kind) {
-                case ts.SyntaxKind.ClassDeclaration:
-                    parser = new ClassParser();
-                    result = parser.parse(node);
-                    break;
-                default:
-                    break;
-            }
-        });
 
-        console.log(result);
+        new SourceFileParser().parse(file);
     }
 }

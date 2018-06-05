@@ -1,9 +1,16 @@
 import { getOptions } from './cli';
-import { Project } from './project';
+import { COMPILER_OPTIONS } from './compiler-options';
+import { Compiler } from './compiler';
 
 const options = getOptions();
 
-const project = new Project(options);
-//console.log(project);
+
+const compiler = new Compiler(COMPILER_OPTIONS);
+const files = compiler.compile(options.entryPoint);
+
+
+
+
 
 console.log('--- THE END');
+

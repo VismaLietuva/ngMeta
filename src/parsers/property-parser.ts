@@ -1,5 +1,5 @@
 import { PropertyDeclaration, Identifier, SyntaxKind } from "typescript";
-import { parseName, hasModifier, getDeclaringType } from "./utils";
+import { parseName, hasModifier } from "./utils";
 import { TypeParser } from "./type-parser";
 
 export class PropertyMetadata {

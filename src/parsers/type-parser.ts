@@ -12,10 +12,45 @@ const SIMPLE_TYPES: Map<SyntaxKind, string> = new Map([
 export class TypeParser {
 
     parse(node: Node): string {
-        if (SIMPLE_TYPES.has(node.kind)) {
-            return SIMPLE_TYPES.get(node.kind);
+        const type = SIMPLE_TYPES.get(node.kind);
+
+        if (type) {
+            return type;
         }
 
         return '<unknown>';
     }
+
+    // export function getDeclaringType(node: Node): string {
+    //     switch (node.kind) {
+    //         case SyntaxKind.StringKeyword:
+    //             return 'string';
+    //         case SyntaxKind.NumberKeyword:
+    //             return 'number';
+    //         case SyntaxKind.BooleanKeyword:
+    //             return 'boolean';
+    //         case SyntaxKind.ObjectKeyword:
+    //             return 'object';
+    //         case SyntaxKind.TypeLiteral:
+    //             return '{}';
+    //         case SyntaxKind.ArrayType:
+    //             return parseArrayType(node as ArrayTypeNode);
+    //         case SyntaxKind.TypeReference:
+    //             return getTypeReference(node as TypeReferenceNode);
+    //         case SyntaxKind.VoidKeyword:
+    //             return 'void';
+    //         default:
+    //             return '<unknown>';
+    //     }
+    // }
+
+    // export function getTypeReference(ref: TypeReferenceNode): string {
+    //     const identifier = ref.typeName as Identifier;
+    //     return parseName(identifier);
+    // }
+
+    // export function parseArrayType(node: ArrayTypeNode): string {
+    //     const type = getDeclaringType(node.elementType);
+    //     return `${type}[]`;
+    // }
 }

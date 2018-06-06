@@ -11,7 +11,10 @@ const SIMPLE_TYPES: Map<SyntaxKind, string> = new Map([
 
 export class TypeParser {
 
-    parse(node: Node): string {
+    parse(node: Node, defaultValue = '<unknown>'): string {
+        if (!node) {
+            return defaultValue;
+        }
         const type = SIMPLE_TYPES.get(node.kind);
 
         if (type) {

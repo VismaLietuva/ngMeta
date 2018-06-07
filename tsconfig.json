@@ -6,6 +6,10 @@
         "outDir": "./.out",
         "strict": false,
         "moduleResolution": "node",
-        "sourceMap": true
+        "sourceMap": true,
+        "typeRoots": [
+            "./src/types/",
+            "./node_modules/@types/"
+        ]
     }
 }

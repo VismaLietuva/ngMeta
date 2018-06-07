@@ -2,12 +2,14 @@ import { ClassDeclaration, SyntaxKind, PropertyDeclaration, MethodDeclaration } 
 import { PropertyMetadata, PropertyParser } from "./property-parser";
 import { parseName, hasModifier } from "./utils";
 import { MethodParser, MethodMetadata } from "./method-parser";
+import { JSDocParser, DocumentationMetadata } from "./jsdoc-parser";
 
 export class ClassMetadata {
     name: string;
     isExported: boolean;
     properties: PropertyMetadata[];
     methods: MethodMetadata[];
+    docs: DocumentationMetadata;
 
     constructor() {
         this.isExported = false;
@@ -19,6 +21,7 @@ export class ClassMetadata {
 export class ClassParser {
     private _propertyParser = new PropertyParser();
     private _methodParser = new MethodParser();
+    private _jsDocParser = new JSDocParser();
 
     parse(klass: ClassDeclaration): ClassMetadata {
         const meta = new ClassMetadata();
@@ -41,6 +44,8 @@ export class ClassParser {
                 }
             })
         }
+
+        meta.docs = this._jsDocParser.parse(klass);
 
         return meta;
     }

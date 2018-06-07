@@ -1,6 +1,7 @@
 import { MethodDeclaration, Identifier, SyntaxKind } from "typescript";
 import { parseName, hasModifier } from "./utils";
 import { TypeParser } from "./type-parser";
+import { JSDocParser } from "./jsdoc-parser";
 
 export class MethodMetadata {
     name: string;
@@ -12,6 +13,7 @@ export class MethodMetadata {
 export class MethodParser {
 
     private _typeParser = new TypeParser();
+    private _jsdocParser = new JSDocParser();
 
     parse(method: MethodDeclaration): MethodMetadata {
         const meta = new MethodMetadata;
@@ -21,6 +23,7 @@ export class MethodParser {
         meta.isProtected = hasModifier(SyntaxKind.ProtectedKeyword, method.modifiers);
         meta.type = this._typeParser.parse(method.type, 'void');
 
+        const p = this._jsdocParser.parse(method);
         return meta;
     }
 }

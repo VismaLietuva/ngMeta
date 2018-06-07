@@ -2,7 +2,7 @@ import { ClassDeclaration, SyntaxKind, PropertyDeclaration, MethodDeclaration } 
 import { PropertyMetadata, PropertyParser } from "./property-parser";
 import { parseName, hasModifier } from "./utils";
 import { MethodParser, MethodMetadata } from "./method-parser";
-import { JSDocParser, DocumentationMetadata } from "./jsdoc-parser";
+import { JSDocParser, DocumentationMetadata } from "./jsdoc/jsdoc-parser";
 
 export class ClassMetadata {
     name: string;

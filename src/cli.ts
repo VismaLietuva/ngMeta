@@ -1,18 +1,32 @@
 import * as yargs from 'yargs';
 
 export class RuntimeOptions {
-    entryPoint: string;
+    constructor(
+        public entryPoint: string,
+        public output: string) { }
 }
 
-export function getOptions(): RuntimeOptions {
-    const args = yargs.command(
-        '$0 <entry-point> [options]',
-        'Parse angular application and output resulting metadata to a JSON file'
-    ).argv;
+export class Cli {
+    static getOptions(): RuntimeOptions {
+        var argv = yargs
+            .usage('Usage: $0 -e [path] [-o [path]]')
+            .option('e', {
+                describe: 'Entry point to Angular application or library (usually "main.ts" for application and "public_api.ts" for library)',
+                alias: 'entry',
+                demandOption: true,
+                type: 'string'
+            })
+            .option('o', {
+                describe: 'Path to the output file',
+                alias: 'output',
+                demandOption: false,
+                type: 'string',
+                default: './metadata.json'
+            })
+            .demandOption('e', "Please prove a path to entry point file")
+            .argv
 
-    // console.log(args);
-
-    return {
-        entryPoint: args.entryPoint
-    };
+        return new RuntimeOptions(argv['entry'], argv['output']);
+    }
 }
+
